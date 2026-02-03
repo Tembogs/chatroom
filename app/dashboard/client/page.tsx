@@ -25,21 +25,21 @@ export default function ClientDashboard() {
   useEffect(() => {
     const sync = async () => {
       try {
-        const res = await api.get('/request/accepted');
+        const res = await api.get('https://marketplace-a.onrender.com/api/request/accepted');
         const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
         const myId = savedUser.id;
 
         if (myId) {
-          const profileRes = await api.get(`/profile/user/${myId}`);
+          const profileRes = await api.get(`https://marketplace-a.onrender.com/api/profile/user/${myId}`);
           setClient(profileRes.data); 
         }
         if (res.data && res.data.length > 0) {
           const req = res.data[0];
           setActiveRequest(req);
-          const clientRes = await api.get(`profile/user/${req.userId}`);
+          const clientRes = await api.get(`https://marketplace-a.onrender.com/api/profile/user/${req.userId}`);
           setClient(clientRes.data);
           socket?.emit("join-request", req.id);
-          const msgs = await api.get(`/message/${req.id}/messages`);
+          const msgs = await api.get(`https://marketplace-a.onrender.com/api/message/${req.id}/messages`);
           setMessages(msgs.data);
         }
       } catch (e) { console.error("Sync failed", e); }
@@ -86,7 +86,7 @@ export default function ClientDashboard() {
   const handleCreateRequest = async () => {
     try {
       setIsSearching(true);
-      const res = await api.post('/request'); 
+      const res = await api.post('https://marketplace-a.onrender.com/api/request'); 
       
       // 🔥 If an expert was found immediately, update the UI NOW
       if (res.data.status === 'ACCEPTED' && res.data.expertId) {
@@ -107,7 +107,7 @@ export default function ClientDashboard() {
       return;
     }
     try {
-      await api.post(`/request/${activeRequest.id}/cancel`);
+      await api.post(`https://marketplace-a.onrender.com/api/request/${activeRequest.id}/cancel`);
       setActiveRequest(null);
       setMessages([]);
       setIsSearching(false); 
@@ -152,7 +152,7 @@ export default function ClientDashboard() {
   if (!activeRequest) return;
 
   try {
-    await api.post('/review', { 
+    await api.post('https://marketplace-a.onrender.com/api/review', { 
       rating, 
       comment, 
       requestId: activeRequest.id, 

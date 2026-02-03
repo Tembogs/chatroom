@@ -8,9 +8,19 @@ export const useSocket = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    const newSocket = io("http://localhost:3001", {
-      auth: { token }
+    const newSocket = io("https://marketplace-a.onrender.com", {
+      auth: { token },
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: 5,
+      transports: ['websocket', 'polling'],
+      withCredentials: true
     });
+
+    newSocket.on('connect', () => console.log('Socket connected'));
+    newSocket.on('disconnect', (reason) => console.log('Disconnected:', reason));
+    newSocket.on('connect_error', (error) => console.error('Connection error:', error));
 
     setSocket(newSocket);
 
