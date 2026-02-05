@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useSocket } from '@/app/hooks/page';
-import api from '@/app/api/page';
+import { useSocket } from '@/hooks/page';
 import { Send, Star, Search, ShieldCheck, X, CheckCircle2, Circle, LogOut } from 'lucide-react';
 import { useNav } from "../../components/layout/page";
 import { useRouter } from 'next/navigation';
+import api from '@/src/lib/api';
 
 export default function ClientDashboard() {
   const router = useRouter();

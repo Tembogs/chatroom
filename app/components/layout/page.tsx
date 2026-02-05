@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, createContext, useContext } from 'react';
 import { Menu, X, Home, MessageSquare, LogOut } from 'lucide-react';
-import { useSocket } from '@/app/hooks/page';
+import { useSocket } from '@/hooks/page';
 import { useRouter } from 'next/navigation';
 
 // 1. Create the Context to hold the current view state

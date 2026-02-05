@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageSquare, User, Briefcase, Loader2, AlertCircle } from 'lucide-react';
-import api from '@/app/api/page';
+import api from '@/src/lib/api';
+
 
 
 export default function AuthPage() {

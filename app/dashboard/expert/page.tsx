@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useSocket } from '@/app/hooks/page';
-import api from '@/app/api/page';
+import { useSocket } from '@/hooks/page';
 import { Send, Star, Circle, MessageSquare, CheckCheck, X, Bell, LogOut, Loader2, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useNav } from "../../components/layout/page";
+import api from '@/src/lib/api';
 
 const ElapsedTimer = ({ createdAt }: { createdAt: string }) => {
   const [elapsed, setElapsed] = useState("");
