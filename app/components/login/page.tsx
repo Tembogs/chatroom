@@ -26,7 +26,7 @@ export default function AuthPage() {
         : { email, password, role: 'USER' };    
 
       // 2. Determine Endpoint
-      const endpoint = mode === 'login' ? 'https://marketplace-a.onrender.com/api/auth/login' : 'https://marketplace-a.onrender.com/api/auth/register';
+      const endpoint = mode === 'login' ? 'https://contact-support.onrender.com/api/auth/login' : 'https://contact-support.onrender.com/api/auth/register';
 
       // 3. API Call
       const { data } = await api.post(endpoint, payload);

@@ -47,22 +47,22 @@ export default function ExpertDashboard() {
   useEffect(() => {
     const sync = async () => {
       try {
-        const profile = await api.get('https://marketplace-a.onrender.com/api/profile/me');
+        const profile = await api.get('https://contact-support.onrender.com/api/profile/me');
         setExpert(profile.data);
       
-        const reviewRes = await api.get(`https://marketplace-a.onrender.com/api/review/expert/${profile.data.userId}`);
+        const reviewRes = await api.get(`https://contact-support.onrender.com/api/review/expert/${profile.data.userId}`);
         setReviews(reviewRes.data.data);
 
-        const pending = await api.get('https://marketplace-a.onrender.com/api/request/pending'); 
+        const pending = await api.get('https://contact-support.onrender.com/api/request/pending'); 
         setPendingRequests(pending.data);
 
-        const active = await api.get('https://marketplace-a.onrender.com/api/request/accepted');
+        const active = await api.get('https://contact-support.onrender.com/api/request/accepted');
         if (active.data && active.data.length > 0) {
           const req = active.data[0];
           console.log("DEBUG: Active Request Data:", req);
           setActiveRequest(req);
           socket?.emit("join-request", req.id);
-          const msgs = await api.get(`https://marketplace-a.onrender.com/api/message/${req.id}/messages`);
+          const msgs = await api.get(`https://contact-support.onrender.com/api/message/${req.id}/messages`);
           setMessages(msgs.data);
         }
       } catch (e) { console.error("Sync failed", e); }
@@ -129,7 +129,7 @@ export default function ExpertDashboard() {
     if (!targetId) return;
 
     try {
-      const { data } = await api.post(`https://marketplace-a.onrender.com/api/request/${targetId}/accept`);
+      const { data } = await api.post(`https://contact-support.onrender.com/api/request/${targetId}/accept`);
       setActiveRequest(data);
       socket?.emit("join-request", data.id);
       setIncoming(null);
@@ -142,7 +142,7 @@ export default function ExpertDashboard() {
 
   const handleReject = async (reqId: string) => {
     try {
-      await api.post(`https://marketplace-a.onrender.com/api/request/${reqId}/reject`);
+      await api.post(`https://contact-support.onrender.com/api/request/${reqId}/reject`);
       // Remove from local UI list
       setPendingRequests((prev) => prev.filter(r => r.id !== reqId));
       if (incoming?.id === reqId) setIncoming(null);
@@ -160,7 +160,7 @@ export default function ExpertDashboard() {
     setInput(""); 
 
     try {
-      await api.post(`https://marketplace-a.onrender.com/api/message/${activeRequest.id}/messages`, { content });
+      await api.post(`https://contact-support.onrender.com/api/message/${activeRequest.id}/messages`, { content });
     } catch (err: any) {
       console.error("❌ Message failed:", err);
       setInput(content);
@@ -181,7 +181,7 @@ export default function ExpertDashboard() {
   const handleCloseChat = async () => {
     if (!window.confirm("End this support session?")) return;
     try {
-      await api.post(`https://marketplace-a.onrender.com/api/request/${activeRequest.id}/close`);
+      await api.post(`https://contact-support.onrender.com/api/request/${activeRequest.id}/close`);
       setActiveRequest(null);
       setMessages([]);
       setCurrentView('dashboard');

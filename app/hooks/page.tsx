@@ -8,7 +8,7 @@ export const useSocket = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    const newSocket = io("https://marketplace-a.onrender.com", {
+    const newSocket = io("https://contact-support.onrender.com", {
       auth: { token },
       reconnection: true,
       reconnectionDelay: 1000,
