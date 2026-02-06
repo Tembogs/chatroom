@@ -1,3 +1,4 @@
+"use client";
 import { motion } from 'framer-motion';
 export default function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (

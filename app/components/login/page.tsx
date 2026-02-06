@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageSquare, User, Briefcase, Loader2, AlertCircle } from 'lucide-react';
+import { User, Briefcase, Loader2, AlertCircle } from 'lucide-react';
 import api from '@/src/lib/api';
 import Image from 'next/image';
 
