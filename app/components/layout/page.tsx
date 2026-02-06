@@ -3,6 +3,7 @@ import React, { useEffect, useState, createContext, useContext } from 'react';
 import { Menu, X, Home, MessageSquare, LogOut } from 'lucide-react';
 import { useSocket } from '@/hooks/page';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 // 1. Create the Context to hold the current view state
 type ViewType = 'dashboard' | 'chat' | 'reviews';
@@ -24,6 +25,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const socket = useSocket();
   const router = useRouter();
   const [userRole, setUserRole] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isLandingPage = pathname === '/' || pathname === '/features' || pathname === '/components/testimonials';
 
   useEffect(() => {
     const saved = localStorage.getItem('user');
@@ -46,6 +49,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       router.push("/");
     }
   };
+  
+  if (isLandingPage) {
+    return <>{children}</>;
+  }
 
   return (
     // 3. Wrap everything in the Provider
@@ -53,7 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex h-screen bg-[#F1F5F9] overflow-hidden">
         
         {/* MOBILE SIDEBAR OVERLAY */}
-        <div className={`fixed inset-0 z-50 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        <div className={`fixed inset-0 z-60 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
           <div className={`absolute left-0 top-0 h-full w-72 bg-white shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
             <div className="p-6 flex flex-col h-full">

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageSquare, User, Briefcase, Loader2, AlertCircle } from 'lucide-react';
 import api from '@/src/lib/api';
+import Image from 'next/image';
 
 
 
@@ -57,18 +58,18 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex flex-col items-center px-4 w-full max-w-lg mx-auto">
+    <div className="flex flex-col items-center px-3 scroll-pb-0.5 w-full max-w-lg mx-auto relative z-10">
       {/* Brand Header */}
       <div className="flex flex-col items-center mb-8 text-center">
-        <div className="w-16 h-16 bg-[#6366F1] rounded-2xl flex items-center justify-center shadow-lg mb-6 transition-transform hover:scale-105">
-          <MessageSquare className="text-white w-10 h-10" />
+        <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg mb-6 transition-transform hover:scale-105">
+           <Image src="/expert.png" alt="ExpertFlow Logo" width={45} height={35} className="object-contain" />
         </div>
         <h1 className="text-4xl font-bold text-slate-900 mb-2 tracking-tight">Expert Support</h1>
         <p className="text-slate-500 text-lg">Your gateway to real-time solutions</p>
       </div>
 
       {/* Auth Card */}
-      <div className="bg-white p-8 rounded-[2.5rem] shadow-2xl w-full border border-slate-100 relative overflow-hidden">
+      <div className="bg-gray-50 p-9 rounded-[2.5rem] shadow-2xl w-full relative overflow-hidden">
         
         {/* Error Alert */}
         {error && (

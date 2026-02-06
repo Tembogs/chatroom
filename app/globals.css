@@ -29,3 +29,25 @@ body {
     @apply w-full bg-slate-50 border-2 border-transparent p-4 rounded-2xl text-slate-900 focus:border-indigo-500 focus:bg-white outline-none transition-all placeholder:text-slate-300;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Improve the look of the scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe; /* Indigo-200 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #818cf8; /* Indigo-400 */
+}
