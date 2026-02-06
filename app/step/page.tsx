@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-export function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
+export default function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (
     <motion.div 
       whileHover={{ y: -10 }}
