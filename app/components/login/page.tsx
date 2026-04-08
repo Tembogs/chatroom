@@ -31,15 +31,12 @@ export default function AuthPage() {
       const endpoint = mode === 'login' ? 'https://contact-support.onrender.com/api/auth/login' : 'https://contact-support.onrender.com/api/auth/register';
 
       // 3. API Call
-      const { data } = await api.post(endpoint, payload);
+      const { data } = await api.post(endpoint, payload, { withCredentials: true });
       console.log("Full Backend Data:", data);
 
-      // 4. Handle Success: Store Token and User Info
-      localStorage.setItem('token', data.token);
+      // 4. Handle Success: User Info
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      console.log("Saved Token:", localStorage.getItem('token'));
-      console.log("Saved User:", localStorage.getItem('user'));
 
       // 5. Navigate to respective dashboard
       if (data.user.role === 'EXPERT') {

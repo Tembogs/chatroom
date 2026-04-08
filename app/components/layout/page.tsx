@@ -4,6 +4,7 @@ import { Menu, X, Home, MessageSquare, LogOut } from 'lucide-react';
 import { useSocket } from '@/hooks/page';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
+import api from '@/src/lib/api';
 
 // 1. Create the Context to hold the current view state
 type ViewType = 'dashboard' | 'chat' | 'reviews';
@@ -29,15 +30,41 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const isLandingPage = pathname === '/' || pathname === '/features' || pathname === '/components/testimonials';
 
   useEffect(() => {
-    const saved = localStorage.getItem('user');
-    if (saved) {
-      try {
-        setUserRole(JSON.parse(saved).role);
-      } catch (e) {
-        console.error("Parse error", e);
-      }
-    }
-  }, []);
+      const checkAuth = async () => {
+        // 1. Check localStorage for a "hint" of who was logged in
+        const saved = localStorage.getItem('user');
+        if (!saved) return;
+
+        try {
+          const parsedUser = JSON.parse(saved);
+          
+          // 2. Separate logic based on the stored role hint
+          if (parsedUser.role === 'EXPERT') {
+            // Hit the Expert-only route
+            const { data } = await api.get('https://contact-support.onrender.com/api/auth/me');
+            setUserRole('EXPERT');
+            localStorage.setItem('user', JSON.stringify(data));
+          } else {
+            // Hit the User-only route
+            const { data } = await api.get('https://contact-support.onrender.com/api/auth/user');
+            setUserRole('USER');
+            localStorage.setItem('user', JSON.stringify(data));
+          }
+        } catch (err) {
+          // 3. If the cookie is expired or the role is mismatched, the backend returns 401/403
+          console.log("Session invalid, clearing state");
+          setUserRole(null);
+          localStorage.removeItem('user');
+          
+          // Optional: Redirect to login if on a protected dashboard
+          if (window.location.pathname.includes('dashboard')) {
+            window.location.href = '/login';
+          }
+        }
+      };
+
+  checkAuth();
+}, []);
 
   const handleLogout = async () => {
     try {
