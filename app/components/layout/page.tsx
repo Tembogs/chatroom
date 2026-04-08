@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             // Hit the User-only route
             const { data } = await api.get('https://contact-support.onrender.com/api/auth/user');
             setUserRole('USER');
-            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem('user', JSON.stringify(data.user));
           }
         } catch (err) {
           // 3. If the cookie is expired or the role is mismatched, the backend returns 401/403
